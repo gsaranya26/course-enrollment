@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Reservation System</title>
+    <title>Course Enrollment System</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Restaurant Reservation System</h1>
+        <h1>Course Enrollment System</h1>
         
-        <form id="reservationForm">
-            <input type="text" id="name" placeholder="Customer Name" required>
-            <input type="number" id="numberOfGuests" placeholder="Number of Guests" required>
-            <input type="datetime-local" id="reservationTime" required>
-            <button type="submit">Add Reservation</button>
-        </form>
-        
-        <h2>Current Reservations</h2>
-        <ul id="reservationList"></ul>
+        <h2>Add Course</h2>
+        <input type="text" id="courseName" placeholder="Course Name" required>
+        <input type="text" id="courseCode" placeholder="Course Code" required>
+        <button id="addCourseButton">Add Course</button>
+
+        <h2>Enroll Student</h2>
+        <input type="text" id="studentName" placeholder="Student Name" required>
+        <input type="text" id="courseToEnroll" placeholder="Course Code" required>
+        <button id="enrollButton">Enroll Student</button>
+
+        <h2>Available Courses</h2>
+        <ul id="courseList"></ul>
     </div>
 
     <script src="script.js"></script>

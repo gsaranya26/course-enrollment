@@ -1,44 +1,54 @@
-let reservations = [];
+let courses = [];
 
 
-function addReservation(name, numberOfGuests, reservationTime) {
-    const reservation = {
+function addCourse(name, code) {
+    const course = {
         name: name,
-        numberOfGuests: numberOfGuests,
-        reservationTime: new Date(reservationTime)
+        code: code,
+        students: []
     };
-    reservations.push(reservation);
-    updateReservationList();
+    courses.push(course);
+    updateCourseList();
 }
 
-function updateReservationList() {
-    const reservationList = document.getElementById("reservationList");
-    reservationList.innerHTML = ''; 
-    reservations.forEach((reservation, index) => {
+
+function enrollStudent(studentName, courseCode) {
+    const course = courses.find(c => c.code === courseCode);
+    if (course) {
+        course.students.push(studentName);
+        updateCourseList();
+    } else {
+        alert("Course not found.");
+    }
+}
+
+function updateCourseList() {
+    const courseList = document.getElementById("courseList");
+    courseList.innerHTML = ''; 
+    courses.forEach(course => {
         const li = document.createElement("li");
-        li.textContent = `${reservation.name} - Guests: ${reservation.numberOfGuests} - Time: ${reservation.reservationTime.toLocaleString()}`;
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.onclick = () => deleteReservation(index);
-        li.appendChild(deleteButton);
-        reservationList.appendChild(li);
+        li.textContent = `${course.name} (${course.code}) - Students: ${course.students.join(", ")}`;
+        courseList.appendChild(li);
     });
 }
 
 
-function deleteReservation(index) {
-    reservations.splice(index, 1);
-    updateReservationList();
-}
+document.getElementById("addCourseButton").addEventListener("click", function() {
+    const courseName = document.getElementById("courseName").value;
+    const courseCode = document.getElementById("courseCode").value;
 
+    addCourse(courseName, courseCode);
+    
+    document.getElementById("courseName").value = '';
+    document.getElementById("courseCode").value = '';
+});
 
-document.getElementById("reservationForm").addEventListener("submit", function(event) {
-    event.preventDefault(); 
-    const name = document.getElementById("name").value;
-    const numberOfGuests = document.getElementById("numberOfGuests").value;
-    const reservationTime = document.getElementById("reservationTime").value;
+document.getElementById("enrollButton").addEventListener("click", function() {
+    const studentName = document.getElementById("studentName").value;
+    const courseToEnroll = document.getElementById("courseToEnroll").value;
 
-    addReservation(name, numberOfGuests, reservationTime);
-  
-    document.getElementById("reservationForm").reset();
+    enrollStudent(studentName, courseToEnroll);
+
+    document.getElementById("studentName").value = '';
+    document.getElementById("courseToEnroll").value = '';
 });
